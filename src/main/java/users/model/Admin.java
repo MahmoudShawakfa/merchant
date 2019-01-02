@@ -1,6 +1,6 @@
 package users.model;
 
-import item.model.Categories;
+import item.model.Category;
 import item.model.Item;
 import item.model.Report;
 
@@ -19,14 +19,14 @@ public class Admin extends User {
   }
 
   public void changePostStatus(Item item,boolean blocked){
-    item.setBlocked(blocked);
+//    item.setIsBlocked(blocked);
   }
 
-  public ArrayList<Report> readReports(Item item){
-    return item.getReports();
-  }
+//  public ArrayList<Report> readReports(Item item){
+//    return item.getReports();
+//  }
 
-  public Categories createNewCategory(String categoryName){
-    return new Categories(categoryName);
+  public Category createNewCategory(String categoryName){
+    return new Category(categoryName);
   }
 }

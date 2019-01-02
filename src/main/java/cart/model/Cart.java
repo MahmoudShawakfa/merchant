@@ -6,19 +6,24 @@ import java.util.List;
 
 public class Cart {
 
-  private List<Item> cartOfItems;
-  private double totalPrice;
+  private List<Item> items;
   private int numberOfItems;
 
   public void addToCart(Item item) {
-    cartOfItems.add(item);
-    totalPrice += item.getTotalPrice();
+    items.add(item);
   }
 
   public void removeFromCart(Item item) {
-    cartOfItems.remove(item);
-    totalPrice -= item.getTotalPrice();
+    if (items.contains(item)) {
+      items.remove(item);
+    }
   }
 
-
+  public double calculateTotalPrice() {
+    double totalPrice = 0;
+    for (Item item : items) {
+      totalPrice += item.getPrice();
+    }
+    return totalPrice;
+  }
 }

@@ -1,13 +1,13 @@
 package item.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class Categories {
+public class Category {
   private String categoryName;
-  ArrayList<Field> topFields;
-  ArrayList<Field> otherFields;
+  private List<Field> topFields;
+  private List<Field> otherFields;
 
-  public Categories(String categoryName) {
+  public Category(String categoryName) {
     this.categoryName = categoryName;
   }
 
@@ -19,19 +19,19 @@ public class Categories {
     this.categoryName = categoryName;
   }
 
-  public ArrayList<Field> getTopFields() {
+  public List<Field> getTopFields() {
     return topFields;
   }
 
-  public void setTopFields(ArrayList<Field> topFields) {
+  public void setTopFields(List<Field> topFields) {
     this.topFields = topFields;
   }
 
-  public ArrayList<Field> getOtherFields() {
+  public List<Field> getOtherFields() {
     return otherFields;
   }
 
-  public void setOtherFields(ArrayList<Field> otherFields) {
+  public void setOtherFields(List<Field> otherFields) {
     this.otherFields = otherFields;
   }
 }
