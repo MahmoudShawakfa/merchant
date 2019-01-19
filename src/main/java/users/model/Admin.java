@@ -19,7 +19,7 @@ public class Admin extends User {
   }
 
   public void changePostStatus(Item item,boolean blocked){
-//    item.setIsBlocked(blocked);
+    item.setIsBlocked(blocked);
   }
 
 //  public ArrayList<Report> readReports(Item item){

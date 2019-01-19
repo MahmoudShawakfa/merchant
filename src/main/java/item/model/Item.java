@@ -44,6 +44,10 @@ public class Item {
     this.sponsored = isSponsored;
   }
 
+  public void setIsBlocked(boolean isBlocked) {
+    this.blocked = isBlocked;
+  }
+
   public List<Report> getReports() {
     return reports;
   }
