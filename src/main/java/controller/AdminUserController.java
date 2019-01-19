@@ -33,26 +33,22 @@ public class AdminUserController {
 
   @PostMapping(produces = "application/json",value = "/blockItem")
   public void blockItem(@RequestBody AdminItemRequest adminItemRequest) {
-    Admin admin = getAndValidateAdminUser(adminItemRequest);
-    ClientUser clientUser = getClientUserAndValidateIt(adminItemRequest);
-    for (Item item : clientUser.getItems()) {
-        if(item.getId() == adminItemRequest.getId()) {
-          admin.changePostStatus(item,true);
-          return;
-        }
-    }
-    throw new ItemDoesNotExistException("The Item Does Not Exist");
+    changeItemBlockStatus(adminItemRequest, true);
+    return;
   }
 
   @PostMapping(produces = "application/json",value = "/unblockItem")
   public void unblockItem(@RequestBody AdminItemRequest adminItemRequest) {
+    changeItemBlockStatus(adminItemRequest, false);
+  }
+
+  private void changeItemBlockStatus(@RequestBody AdminItemRequest adminItemRequest, boolean b) {
     Admin admin = getAndValidateAdminUser(adminItemRequest);
     ClientUser clientUser = getClientUserAndValidateIt(adminItemRequest);
-    for (Item item : clientUser.getItems()) {
-      if(item.getId() == adminItemRequest.getId()) {
-        admin.changePostStatus(item,false);
-        return;
-      }
+    Item item = clientUser.getItems().get(adminItemRequest.getId());
+    if (item != null) {
+      admin.changePostStatus(item, b);
+      return;
     }
     throw new ItemDoesNotExistException("The Item Does Not Exist");
   }

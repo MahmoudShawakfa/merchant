@@ -22,8 +22,8 @@ public class ClientUserController {
   public void addItemController(@RequestBody ItemBaseRequest itemBaseRequest) {
     User user = getAndValidateUser(itemBaseRequest);
     ClientUser user1 = (ClientUser) user;
-    List<Item> items = user1.getItems();
-    items.add(itemBaseRequest.getItem());
+    Map<Integer, Item> items = user1.getItems();
+    items.put(itemBaseRequest.getItem().getId(),itemBaseRequest.getItem());
   }
 
   @PostMapping(value = "/removeItem", produces = "application/json")

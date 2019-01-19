@@ -6,11 +6,12 @@ import item.model.Report;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ClientUser extends User {
   private double rating;
   private boolean isActive;
-  private List<Item> items;
+  private Map<Integer,Item> items;
 
   public ClientUser(String userName, String password) {
     super(userName, password);
@@ -20,7 +21,7 @@ public class ClientUser extends User {
     Item item = new Item.Builder().setDescription("d").setPrice(2.3).build();
   }
 
-  public List<Item> getItems() {
+  public Map<Integer,Item> getItems() {
     return items;
   }
 }
