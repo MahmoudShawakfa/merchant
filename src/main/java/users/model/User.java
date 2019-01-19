@@ -1,8 +1,6 @@
 package users.model;
 
 import item.model.Item;
-
-import java.util.List;
 import java.util.Map;
 
 public class User {
