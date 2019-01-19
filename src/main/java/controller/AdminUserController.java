@@ -1,5 +1,6 @@
 package controller;
 
+import exception.ItemDoesNotExistException;
 import exception.UserDoesNotExistException;
 import exception.UserIsNotAClientUserException;
 import exception.UserIsNotAdminException;
@@ -37,8 +38,10 @@ public class AdminUserController {
     for (Item item : clientUser.getItems()) {
         if(item.getId() == adminItemRequest.getId()) {
           admin.changePostStatus(item,true);
+          return;
         }
     }
+    throw new ItemDoesNotExistException("The Item Does Not Exist");
   }
 
   @PostMapping(produces = "application/json",value = "/unblockItem")
@@ -48,8 +51,10 @@ public class AdminUserController {
     for (Item item : clientUser.getItems()) {
       if(item.getId() == adminItemRequest.getId()) {
         admin.changePostStatus(item,false);
+        return;
       }
     }
+    throw new ItemDoesNotExistException("The Item Does Not Exist");
   }
 
 
