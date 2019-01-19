@@ -6,6 +6,7 @@ public class Item {
   private String picture;
   private boolean sponsored;
   private boolean blocked;
+  private int id;
   private double rating;
   private double price;
   private String description;
@@ -36,6 +37,13 @@ public class Item {
     return price;
   }
 
+  public int getId() {
+    return id;
+  }
+  public void setIsSponsored(boolean isSponsored) {
+    this.sponsored = isSponsored;
+  }
+
   public List<Report> getReports() {
     return reports;
   }
@@ -48,6 +56,7 @@ public class Item {
     private boolean blocked;
     private double rating;
     private double price;
+    private double id;
     private List<Report> reports;
 
     public Builder isBlocked(boolean blocked) {
@@ -60,6 +69,11 @@ public class Item {
     }
     public Builder setPicture(String picture) {
       this.picture = picture;
+      return this;
+    }
+
+    public Builder setId(int id) {
+      this.id=id;
       return this;
     }
 
@@ -93,7 +107,7 @@ public class Item {
 
   @Override
   public int hashCode() {
-    return super.hashCode();
+    return id;
   }
 
   @Override
@@ -103,7 +117,13 @@ public class Item {
 
   @Override
   public boolean equals(Object obj) {
+    if(obj==null) {
+      return false;
+    }
+    if(obj.getClass()!=Item.class) {
+      return false;
+    }
     Item item = (Item) obj;
-    return this.getDescription().equals(item.getDescription());
+    return this.id == item.id;
   }
 }
