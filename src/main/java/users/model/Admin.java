@@ -2,9 +2,6 @@ package users.model;
 
 import item.model.Category;
 import item.model.Item;
-import item.model.Report;
-
-import java.util.ArrayList;
 
 public class Admin extends User {
   boolean isActive;
@@ -15,11 +12,11 @@ public class Admin extends User {
   }
 
   public void changeUserStatus(ClientUser user, boolean isActive) {
-    user.setIsActive(false);
+    user.setActive(false);
   }
 
   public void changePostStatus(Item item,boolean blocked){
-//    item.setIsBlocked(blocked);
+    item.setBlocked(blocked);
   }
 
 //  public ArrayList<Report> readReports(Item item){

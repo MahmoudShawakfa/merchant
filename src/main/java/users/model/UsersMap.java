@@ -1,5 +1,7 @@
 package users.model;
 
+import exception.UserAlreadyExistsException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +22,12 @@ public class UsersMap {
   }
 
   public void addToUserList(String userName, User user) {
-    users.put(userName, user);
+    if(usersMap.getUser(userName) == null) {
+      users.put(userName, user);
+    }
+    else {
+      throw new UserAlreadyExistsException(String.format("This User: %s Already Exists",userName));
+    }
   }
 
   public void removeFromUserList(User user, String userName) {
@@ -34,7 +41,7 @@ public class UsersMap {
   }
 
   public User getUser(String userName) {
-      return usersMap.getUser(userName);
+      return users.get(userName);
   }
 
 }

@@ -1,7 +1,5 @@
 package users.model;
 
-import org.apache.http.client.fluent.Request;
-
 public class SuperAdmin extends User {
 
   public SuperAdmin(String userName, String password) {
@@ -9,8 +7,8 @@ public class SuperAdmin extends User {
   }
 
   @Override
-  public void setIsActive(boolean isActive) {
-    super.setIsActive(true);
+  public void setActive(boolean isActive) {
+    super.setActive(true);
   }
 
   public Admin createAdmin(String userName, String password){
@@ -18,7 +16,7 @@ public class SuperAdmin extends User {
   }
 
   public void setAdminStatus(Admin admin,boolean isActive){
-    admin.setIsActive(isActive);
+    admin.setActive(isActive);
   }
 
 
