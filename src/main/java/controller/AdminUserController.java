@@ -1,9 +1,7 @@
 package controller;
 
-import exception.ItemDoesNotExistException;
-import exception.UserDoesNotExistException;
-import exception.UserIsNotAClientUserException;
-import exception.UserIsNotAdminException;
+import Utils.Utils;
+import exception.*;
 import item.model.Item;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,8 +10,6 @@ import request.model.AdminBaseRequest;
 import request.model.AdminItemRequest;
 import users.model.Admin;
 import users.model.ClientUser;
-import users.model.User;
-import users.model.UsersMap;
 
 
 @RestController
@@ -21,64 +17,33 @@ public class AdminUserController {
 
   @PostMapping(produces = "application/json", value = "/blockUser")
   public void blockUser(@RequestBody AdminBaseRequest adminBaseRequest) {
-    Admin admin = getAndValidateAdminUser(adminBaseRequest);
-    admin.changeUserStatus(getClientUserAndValidateIt(adminBaseRequest),true);
+    Utils.getUser(adminBaseRequest.getAdmin().getUserName(), Admin.class).changeUserStatus(
+            Utils.getUser(adminBaseRequest.getAdmin().getUserName(), ClientUser.class), true);
   }
 
   @PostMapping(produces = "application/json", value = "/unblockUser")
   public void unblockUser(@RequestBody AdminBaseRequest adminBaseRequest) {
-    Admin admin = getAndValidateAdminUser(adminBaseRequest);
-    admin.changeUserStatus(getClientUserAndValidateIt(adminBaseRequest),false);
+    Utils.getUser(adminBaseRequest.getAdmin().getUserName(), Admin.class).changeUserStatus(
+            Utils.getUser(adminBaseRequest.getAdmin().getUserName(), ClientUser.class), false);
   }
 
-  @PostMapping(produces = "application/json",value = "/blockItem")
+  @PostMapping(produces = "application/json", value = "/blockItem")
   public void blockItem(@RequestBody AdminItemRequest adminItemRequest) {
     changeItemBlockStatus(adminItemRequest, true);
-    return;
   }
 
-  @PostMapping(produces = "application/json",value = "/unblockItem")
+  @PostMapping(produces = "application/json", value = "/unblockItem")
   public void unblockItem(@RequestBody AdminItemRequest adminItemRequest) {
     changeItemBlockStatus(adminItemRequest, false);
   }
 
   private void changeItemBlockStatus(@RequestBody AdminItemRequest adminItemRequest, boolean b) {
-    Admin admin = getAndValidateAdminUser(adminItemRequest);
-    ClientUser clientUser = getClientUserAndValidateIt(adminItemRequest);
+    ClientUser clientUser = Utils.getUser(adminItemRequest.getAdmin().getUserName(), ClientUser.class);
     Item item = clientUser.getItems().get(adminItemRequest.getId());
     if (item != null) {
-      admin.changePostStatus(item, b);
+      Utils.getUser(adminItemRequest.getAdmin().getUserName(), Admin.class).changePostStatus(item, b);
       return;
     }
     throw new ItemDoesNotExistException("The Item Does Not Exist");
-  }
-
-
-  private Admin getAndValidateAdminUser(AdminBaseRequest adminBaseRequest) {
-    Admin admin;
-    User user = UsersMap.getUsersInstance().getUser(adminBaseRequest.getAdmin().getUserName());
-    if (user == null) {
-      throw new UserDoesNotExistException("This User: " + adminBaseRequest.getAdmin().getUserName() + " Does Not Exist");
-    }
-    try {
-      admin = (Admin) user;
-    } catch (ClassCastException e) {
-      throw new UserIsNotAdminException("The User Does Not Have enough privileges");
-    }
-    return admin;
-  }
-
-  private ClientUser getClientUserAndValidateIt(AdminBaseRequest adminBaseRequest) {
-    ClientUser clientUser;
-    User user = UsersMap.getUsersInstance().getUser(adminBaseRequest.getUserName());
-    if (user == null) {
-      throw new UserDoesNotExistException("This User: " + adminBaseRequest.getUserName() + " Does Not Exist");
-    }
-    try {
-      clientUser = (ClientUser) user;
-    } catch (ClassCastException e) {
-      throw new UserIsNotAClientUserException("The User Does is Not a Client User");
-    }
-    return clientUser;
   }
 }

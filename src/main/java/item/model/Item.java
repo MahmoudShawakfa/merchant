@@ -10,6 +10,7 @@ public class Item {
   private double rating;
   private double price;
   private String description;
+  private int numberOfRatings;
 
   public String getDescription() {
     return description;
@@ -40,11 +41,17 @@ public class Item {
   public int getId() {
     return id;
   }
-  public void setIsSponsored(boolean isSponsored) {
+
+  public void setRating(double rating) {
+    numberOfRatings+=1;
+    this.rating = rating/numberOfRatings;
+  }
+
+  public void setSponsored(boolean isSponsored) {
     this.sponsored = isSponsored;
   }
 
-  public void setIsBlocked(boolean isBlocked) {
+  public void setBlocked(boolean isBlocked) {
     this.blocked = isBlocked;
   }
 

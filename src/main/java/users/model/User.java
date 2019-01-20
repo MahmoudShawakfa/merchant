@@ -1,21 +1,9 @@
 package users.model;
 
-import item.model.Item;
-import java.util.Map;
-
 public class User {
   private String userName;
   private String password;
   private boolean isActive;
-  private Map<Integer,Item> items;
-
-  public Map<Integer, Item> getItems() {
-    return items;
-  }
-
-  public void setItems(Map<Integer, Item> items) {
-    this.items = items;
-  }
 
   public User(String userName, String password) {
     this.userName = userName;
@@ -38,7 +26,7 @@ public class User {
     this.password = password;
   }
 
-  public void setIsActive(boolean isActive){this.isActive=isActive;}
+  public void setActive(boolean isActive){this.isActive=isActive;}
 
   public boolean isActive() {
     return isActive;
